@@ -6,7 +6,6 @@ import videoRouter from "./routers/videoRouter";
 
 const app = express();
 const logger = morgan("dev");
-console.log(process.cwd() + "/src/views");
 
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
