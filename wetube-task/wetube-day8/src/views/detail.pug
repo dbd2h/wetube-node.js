@@ -1,0 +1,8 @@
+extends layout.pug 
+
+block content 
+    h3=title
+    p=synopsis 
+    ul
+        each genre in genres 
+            li=genre

@@ -1,0 +1,14 @@
+extends layout.pug
+include mixins/mixin.pug
+
+block content
+    form(action="/filter")
+        input(name="year", placeholder="Year",type="text")
+        input(name="rating", placeholder="Rating",type="text")
+        input(value="Search",type="submit")
+        p(style="color:red")=error
+    
+    each video in videos 
+        +video(video)
+    else 
+        ls Sorry nothing found.
