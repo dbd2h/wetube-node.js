@@ -2,9 +2,16 @@ extends base
 
 block content
     form(method="POST")
-        input(placeholder="email",type="email", name="email", required)
-        input(placeholder="username",type="text", name="username", required)
-        input(placeholder="password",type="password", name="password", required)
-        input(placeholder="name",type="text", name="name", required)
-        input(placeholder="location",type="location", name="location", required)
+        input(placeholder="Email",type="email", name="email", required)
+        input(placeholder="Username",type="text", name="username", required)
+        input(placeholder="Password",type="password", name="password", required)
+        input(placeholder="Confirm Password",type="password", name="password2", required)
+        input(placeholder="Name",type="text", name="name", required)
+        input(placeholder="Location",type="location", name="location", required)
         input(type="submit", value="Join")
+        small=errorMessage
+    hr
+    div
+        span Already have an account?
+        br
+        a(href="/login") Log in now &rarr;
