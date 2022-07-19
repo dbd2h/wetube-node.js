@@ -12,10 +12,16 @@ html(lang="ko")
                         a(href="/") Home
                     if loggedIn
                         li
-                            a(href="/logout") Log Out 
+                            a(href=`/users/${loggedInUser._id}`) #{loggedInUser.name}의 Profile
+                        li
+                            a(href="/users/edit") Edit Profile
+                        li
+                            a(href="/users/logout") Logout
                     else
                         li
                             a(href="/join") Join
+                        li
+                            a(href="/login") Login
                     block upload
                     block search
         main

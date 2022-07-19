@@ -2,8 +2,9 @@ extends base.pug
 include mixins/video
 
 block upload
-    li
-        a(href="/videos/upload") Upload Video
+    if loggedIn
+        li
+            a(href="/videos/upload") Upload Video
 
 block search
     li
