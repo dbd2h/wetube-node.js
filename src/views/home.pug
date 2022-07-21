@@ -1,17 +1,10 @@
 extends base.pug
 include mixins/video
 
-block upload
-    if loggedIn
-        li
-            a(href="/videos/upload") Upload Video
-
-block search
-    li
-        a(href="/search") Search
 
 block content
-    each video in videos
-        +video(video)
-    else 
-        ls Sorry nothing found.
+    div.video-grid
+        each video in videos
+            +video(video)
+        else
+            span.empty__message No videos found 

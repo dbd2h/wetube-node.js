@@ -1,6 +1,7 @@
 extends base.pug
 
 block content 
-    form(method="GET")
+    form(method="GET").search__form
         input(name="search", placeholder="Search", type="text" required)
-        input(value="Search", type="submit")
+        button
+            i.fas.fa-search

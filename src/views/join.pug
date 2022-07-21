@@ -10,8 +10,8 @@ block content
         input(placeholder="Location",type="location", name="location", required)
         input(type="submit", value="Join")
         small=errorMessage
-    hr
-    div
+        include partials/social-login
+    div.auth-switch
         span Already have an account?
         br
         a(href="/login") Log in now &rarr;

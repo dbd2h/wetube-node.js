@@ -8,8 +8,6 @@ block content
         small=errorMessage
         br
         a(href="/users/github/start") Continue with GitHub &rarr;
-    hr
-    div
-        span Don`t have an account?
-        br
+        include partials/social-login
+    div.auth-switch
         a(href="/join") Create account now &rarr;
