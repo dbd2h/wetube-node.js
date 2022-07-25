@@ -1,16 +1,33 @@
 extends base.pug
 
 block content
-    video(src="/"+video.fileUrl, controls)
-    div 
+    div#videoContainer
+        video(src="/"+video.fileUrl)
+        div#videoControls
+            button#play Play 
+            button#mute Mute 
+            input#volume(type="range",min="0",max="1",step="0.001")
+            div
+                span#currentTime 0:00
+                span /
+                span#totalTime 00:00
+            div
+                input(type="range", step="0.001", min="0")#timeline
+            div 
+                button#fullScreen Enter Full Screen
+
+    //div 
         h4 Description: #{video.description}
         small=video.createdAt
-    div 
+    //div 
         small Uploaded by 
             a(href=`/users/${video.owner._id}`)=video.owner.name
         h3 #{video.meta.views} #{video.meta.views===1?"view":"views"}
-    if loggedIn
+    //if loggedIn
         if String(video.owner._id)===String(loggedInUser._id)
             a(href=`${video.id}/edit`) Edit Video &rarr;
             br
             a(href=`${video.id}/delete`) Delete Video &rarr;
+
+block scripts
+    script(src="/assets/js/videoPlayer.js")
