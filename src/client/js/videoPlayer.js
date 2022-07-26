@@ -1,12 +1,15 @@
 const $video = document.querySelector("video");
 const $playBtn = document.getElementById("play");
+const $playBtnIcon = $playBtn.querySelector("i");
 const $muteBtn = document.getElementById("mute");
+const $muteBtnIcon = $muteBtn.querySelector("i");
 const $time = document.getElementById("time");
 const $volumeRange = document.getElementById("volume");
 const $currentTime = document.getElementById("currentTime");
 const $totalTime = document.getElementById("totalTime");
 const $timeline = document.getElementById("timeline");
-const $fullscreenBtn = document.getElementById("fullScreen");
+const $fullScreenBtn = document.getElementById("fullScreen");
+const $fullScreenIcon = $fullScreenBtn.querySelector("i");
 const $videoContainer = document.getElementById("videoContainer");
 const $videoControls = document.getElementById("videoControls");
 
@@ -31,7 +34,7 @@ const handlePlayClick = (event) => {
   } else {
     $video.pause();
   }
-  $playBtn.innerHTML = $video.paused ? "Play" : "Pause";
+  $playBtnIcon.classList = $video.paused ? "fas fa-play" : "fas fa-pause";
 };
 
 const handleMute = (event) => {
@@ -40,7 +43,9 @@ const handleMute = (event) => {
   } else {
     $video.muted = true;
   }
-  $muteBtn.innerHTML = $video.muted ? "Unmute" : "Mute";
+  $muteBtnIcon.classList = $video.muted
+    ? "fas fa-volume-mute"
+    : "fas fa-volume-up";
   $volumeRange.value = $video.muted ? 0 : volumeValue;
 };
 
@@ -59,13 +64,11 @@ const handleVolumeChange = (event) => {
 const handleLoadedMetadata = () => {
   $totalTime.innerText = playingTimeMaker(Math.floor($video.duration));
   $timeline.max = $video.duration;
-  console.log("It`s work");
 };
 
 const handleTimeUpdate = () => {
   $currentTime.innerText = playingTimeMaker(Math.floor($video.currentTime));
   $timeline.value = $video.currentTime;
-  console.log($video.currentTime);
 };
 
 const handleTimelineChange = (event) => {
@@ -76,13 +79,13 @@ const handleTimelineChange = (event) => {
 };
 
 const handleFullScreen = () => {
-  const fullScreen = document.fullscreenElement;
+  const fullScreen = document.fullScreenElement;
   if (fullScreen) {
     document.exitFullscreen();
-    $fullscreenBtn.innerText = "Enter Full Screen";
+    $fullScreenIcon.classList = "fas fa-expand";
   } else {
     $videoContainer.requestFullscreen();
-    $fullscreenBtn.innerText = "Exit Full Screen";
+    $fullscreenIcon.classList = "fas fa-compress";
   }
 };
 
@@ -101,21 +104,35 @@ const handleMouseLeave = () => {
   controlsTimeout = id;
 };
 
+const handleEnded = () => {
+  const { id } = $videoContainer.dataset;
+  fetch(`/api/videos/${id}/view`, {
+    method: "POST",
+  });
+};
+
 $playBtn.addEventListener("click", handlePlayClick);
+$video.addEventListener("click", handlePlayClick);
+window.addEventListener("keydown", (event) => {
+  if (event.keyCode === 32) {
+    handlePlayClick();
+  }
+});
 $muteBtn.addEventListener("click", handleMute);
 $volumeRange.addEventListener("input", handleVolumeChange);
-$video.addEventListener("loadedmetadata", handleLoadedMetadata);
+$video.addEventListener("loadeddata", handleLoadedMetadata);
 if ($video.duration) {
   handleLoadedMetadata();
 }
 $video.addEventListener("timeupdate", handleTimeUpdate);
 $timeline.addEventListener("input", handleTimelineChange);
-$video.addEventListener("mousemove", handleMouseMove);
-$video.addEventListener("mouseleave", handleMouseLeave);
-$fullscreenBtn.addEventListener("click", handleFullScreen);
+$video.addEventListener("ended", handleEnded);
+$videoContainer.addEventListener("mousemove", handleMouseMove);
+$videoContainer.addEventListener("mouseleave", handleMouseLeave);
+$fullScreenBtn.addEventListener("click", handleFullScreen);
 document.onfullscreenchange = () => {
-  const fullScreen = document.fullscreenElement;
+  const fullScreen = document.fullScreenElement;
   if (!fullScreen) {
-    $fullscreenBtn.innerText = "Enter Full Screen";
+    $fullScreenBtn.innerText = "Enter Full Screen";
   }
 };
