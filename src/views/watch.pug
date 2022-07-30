@@ -19,19 +19,23 @@ block content
             div
                 span#fullScreen
                     i.fas.fa-expand
-
-    //div 
+    div 
         h4 Description: #{video.description}
         small=video.createdAt
-    //div 
+    div 
         small Uploaded by 
             a(href=`/users/${video.owner._id}`)=video.owner.name
         h3 #{video.meta.views} #{video.meta.views===1?"view":"views"}
-    //if loggedIn
+    if loggedIn
         if String(video.owner._id)===String(loggedInUser._id)
             a(href=`${video.id}/edit`) Edit Video &rarr;
             br
             a(href=`${video.id}/delete`) Delete Video &rarr;
+        div.video__comments
+            form.video__comment-form#commentForm
+                textarea(cols="30", rows="10", placeholder="Write a nice comment...")
+                button Add Comment
 
 block scripts
     script(src="/assets/js/videoPlayer.js")
+    script(src="/assets/js/commentSection.js")
