@@ -1,7 +1,6 @@
 import User from "../models/User.js";
 import fetch from "cross-fetch";
 import bcrypt from "bcrypt";
-import { path } from "express/lib/application";
 
 export const getJoin = (req, res) => res.render("join", { pageTitle: "Join" });
 
@@ -225,6 +224,8 @@ export const see = async (req, res) => {
       model: "User",
     },
   });
+
+  console.log("user Video: ", user);
 
   if (!user) {
     return res.status(404).render("404", { pageTitle: "User not found." });

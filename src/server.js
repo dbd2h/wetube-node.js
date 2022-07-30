@@ -13,7 +13,6 @@ const logger = morgan("dev");
 
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
-app.use(logger);
 app.use(express.urlencoded());
 
 //resave, saveUninitialized 를 true 로 하면 사이트에 접속하는 모든 사람에게 쿠키를 줌
@@ -28,9 +27,13 @@ app.use(
 
 app.use((req, res, next) => {
   req.sessionStore.all((error, sessions) => {
-    console.log(sessions);
     next();
   });
+});
+app.use((req, res, next) => {
+  res.header("Cross-Origin-Embedder-Policy", "require-corp");
+  res.header("Cross-Origin-Opener-Policy", "same-origin");
+  next();
 });
 
 app.use(localsMiddleware);
