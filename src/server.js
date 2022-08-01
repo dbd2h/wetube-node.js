@@ -15,6 +15,7 @@ const logger = morgan("dev");
 app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 app.use(express.urlencoded());
+app.use(express.json());
 
 //resave, saveUninitialized 를 true 로 하면 사이트에 접속하는 모든 사람에게 쿠키를 줌
 app.use(
